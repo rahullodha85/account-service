@@ -1,0 +1,13 @@
+accountservice:
+  image: sd1pgo01lx.saksdirect.com/account-service:<version>
+  restart: always
+  ports:
+    - "9800:9800"
+    - "9805:9805"
+  environment:
+    - JAVA_OPTS=-Xms2g -Xmx2g -XX:-UseAESIntrinsics -XX:-UseGCTaskAffinity -XX:-BindGCTaskThreadsToCPUs -XX:ParallelGCThreads=3 {{key "newrelic"}}
+    - CONSUL_HOST={{key "consul_host"}}
+    - ENV={{key "env"}}
+  labels:
+    - "com.joyent.package=<triton_package>"
+  command: /opt/containerbuddy/containerbuddy -config file:///opt/containerbuddy/config.json /opt/account-service-0.1/bin/account-service -Dhttp.port=9800 -Dhttps.port=9805 -Dpidfile.path=/dev/null -Dconfig.file=/opt/account-service-0.1/conf/account-application.conf -Dsun.net.inetaddr.ttl=3600

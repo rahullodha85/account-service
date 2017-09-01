@@ -1,0 +1,22 @@
+###
+# summary: Logout
+# description: Logout of a user's session by invalidating the user's JSESSIONID.
+#
+# tags:
+#   - sign in
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.SignOutWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: Cookie
+#     in: header
+#     type: string
+#     description: JSESSIONID cookies are invalidated if sent in header
+###
+GET     /account-service/account/logout             @controllers.old.SignInController.logout

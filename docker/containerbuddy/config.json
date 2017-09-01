@@ -1,0 +1,23 @@
+{
+"consul": "{{ .CONSUL_HOST }}",
+"onStart": "/opt/containerbuddy/ms-start.sh",
+"preStop": "/opt/containerbuddy/ms-stop.sh",
+  "services": [
+    {
+      "name": "account-service",
+      "port": 9805,
+      "interfaces": ["eth0"],
+      "health": [
+        "/usr/bin/curl",
+        "-k",
+        "--fail",
+        "-s",
+        "--output",
+        "/dev/null",
+        "https://0.0.0.0:9805/v1/account-service"
+      ],
+      "poll": 10,
+      "ttl": 30
+    }
+  ]
+}

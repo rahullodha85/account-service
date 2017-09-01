@@ -1,0 +1,1143 @@
+->  /   old.Routes
+
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Swagger api json doc page
+GET     /account-service/api-docs             @controllers.Application.getApiDocs
+GET     /account-service/swagger-ui             @controllers.Application.renderSwaggerUi
+GET     /account-service/api-docs/ui/*file      @controllers.Assets.at(path:String="/public/lib/swagger-ui", file:String)
+
+#      ___          _____          ___                       ___
+#     /  /\        /  /::\        /__/\        ___          /__/\
+#    /  /::\      /  /:/\:\      |  |::\      /  /\         \  \:\
+#   /  /:/\:\    /  /:/  \:\     |  |:|:\    /  /:/          \  \:\
+#  /  /:/~/::\  /__/:/ \__\:|  __|__|:|\:\  /__/::\      _____\__\:\
+# /__/:/ /:/\:\ \  \:\ /  /:/ /__/::::| \:\ \__\/\:\__  /__/::::::::\
+# \  \:\/:/__\/  \  \:\  /:/  \  \:\~~\__\/    \  \:\/\ \  \:\~~\~~\/
+#  \  \::/        \  \:\/:/    \  \:\           \__\::/  \  \:\  ~~~
+#   \  \:\         \  \::/      \  \:\          /__/:/    \  \:\
+#    \  \:\         \__\/        \  \:\         \__\/      \  \:\
+#     \__\/                       \__\/                     \__\/
+#
+
+###
+# summary: Health Check
+# description:  Check to see if account-service service is running. Returns a string.
+#
+# tags:
+#   - admin
+###
+GET     /account-service              @controllers.Application.index
+
+###
+# summary: Change Log Level
+# description:  Change the log level of this service. Returns a string.
+#
+# tags:
+#   - admin
+# parameters:
+#   - name: level
+#     type: string
+#     enum: ["ALL", "TRACE", "DEBUG", "INFO", "WARN", "ERROR", "OFF"]
+#     description: Log level to set.
+###
+GET     /account-service/logLevel/$level<(?i)(ALL|TRACE|DEBUG|INFO|WARN|ERROR|OFF)> @controllers.Application.changeLogLevel(level: String)
+
+###
+# summary: Health Check
+# description:  Basic health check. Returns a string.
+#
+# tags:
+#   - admin
+###
+GET     /account-service/admin/ping                @controllers.Admin.ping
+
+###
+# summary: Get JVM Stats
+# description:  Returns JVM Stats.
+#
+# tags:
+#   - admin
+# responses:
+#   200:
+#     description: success
+#     schema:
+#       $ref: '#/definitions/scala.collection.mutable.Map'
+###
+GET     /account-service/admin/jvmstats            @controllers.Admin.jvmstats
+
+###
+# summary: Clear Toggles
+# description: Clear the toggles cache, if you pass a toggle name under ?name=toggle_name it will clear that toggle, otherwise clear everything. Returns a string.
+#
+# tags:
+#   - admin
+###
+GET     /account-service/clear_toggles             @controllers.Application.clearToggles(name: Option[String] ?= None)
+
+###
+# summary: Get Toggles
+# description: See what toggles our service has, if you pass a toggle name under ?name=toggle_name it will fetch that toggle, otherwise fetch everything. Returns a string.
+#
+# tags:
+#   - admin
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        type: array
+#        items:
+#          $ref: '#/definitions/models.Toggle'
+###
+GET     /account-service/toggles                   @controllers.Application.toggles(name: Option[String] ?= None)
+
+###
+# summary: Clear Country Cache
+# description: Clears country cache. Returns a string.
+#
+# tags:
+#   - admin
+###
+DELETE  /account-service/clear-country-cache        @controllers.Application.clear
+
+###
+# summary: Get Header metadata
+# description: Gets the metadata to render the header on the account app.
+#
+# tags:
+#   - admin
+###
+GET  /account-service/messages        @controllers.I18nController.getMessages
+
+#      ___         ___           ___           ___           ___                                ___         ___           ___           ___           ___           ___           ___          _____
+#     /  /\       /  /\         /  /\         /  /\         /  /\          ___                 /  /\       /  /\         /  /\         /  /\         /__/\         /  /\         /  /\        /  /::\
+#    /  /:/_     /  /::\       /  /::\       /  /:/_       /  /::\        /  /\               /  /::\     /  /::\       /  /:/_       /  /:/_       _\_ \:\       /  /::\       /  /::\      /  /:/\:\
+#   /  /:/ /\   /  /:/\:\     /  /:/\:\     /  /:/ /\     /  /:/\:\      /  /:/              /  /:/\:\   /  /:/\:\     /  /:/ /\     /  /:/ /\     /__/\ \:\     /  /:/\:\     /  /:/\:\    /  /:/  \:\
+#  /  /:/ /:/  /  /:/  \:\   /  /:/~/:/    /  /:/_/::\   /  /:/  \:\    /  /:/              /  /:/~/:/  /  /:/~/::\   /  /:/ /::\   /  /:/ /::\   _\_ \:\ \:\   /  /:/  \:\   /  /:/~/:/   /__/:/ \__\:|
+# /__/:/ /:/  /__/:/ \__\:\ /__/:/ /:/___ /__/:/__\/\:\ /__/:/ \__\:\  /  /::\             /__/:/ /:/  /__/:/ /:/\:\ /__/:/ /:/\:\ /__/:/ /:/\:\ /__/\ \:\ \:\ /__/:/ \__\:\ /__/:/ /:/___ \  \:\ /  /:/
+# \  \:\/:/   \  \:\ /  /:/ \  \:\/:::::/ \  \:\ /~~/:/ \  \:\ /  /:/ /__/:/\:\            \  \:\/:/   \  \:\/:/__\/ \  \:\/:/~/:/ \  \:\/:/~/:/ \  \:\ \:\/:/ \  \:\ /  /:/ \  \:\/:::::/  \  \:\  /:/
+#  \  \::/     \  \:\  /:/   \  \::/~~~~   \  \:\  /:/   \  \:\  /:/  \__\/  \:\            \  \::/     \  \::/       \  \::/ /:/   \  \::/ /:/   \  \:\ \::/   \  \:\  /:/   \  \::/~~~~    \  \:\/:/
+#   \  \:\      \  \:\/:/     \  \:\        \  \:\/:/     \  \:\/:/        \  \:\            \  \:\      \  \:\        \__\/ /:/     \__\/ /:/     \  \:\/:/     \  \:\/:/     \  \:\         \  \::/
+#    \  \:\      \  \::/       \  \:\        \  \::/       \  \::/          \__\/             \  \:\      \  \:\         /__/:/        /__/:/       \  \::/       \  \::/       \  \:\         \__\/
+#     \__\/       \__\/         \__\/         \__\/         \__\/                              \__\/       \__\/         \__\/         \__\/         \__\/         \__\/         \__\/
+
+###
+# summary: Forgot Password Page
+# description: Retrieves messages and labels for rendering the forgot password page.
+#
+# tags:
+#   - forgot password
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.ForgotPasswordLabel'
+###
+GET     /account-service/accounts/forgot-password            @controllers.ResetPasswordController.forgotPasswordPage
+
+###
+# summary: Forgot Password
+# description: Sends a reset password link to the user's email address.
+#
+# tags:
+#   - forgot password
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.SuccessResponse'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.ForgotPasswordRequest'
+###
+POST    /account-service/accounts/forgot-password            @controllers.ResetPasswordController.forgotPasswordAction
+
+###
+# summary: Reset Password Page
+# description: Retrieves messages and labels for rendering the reset password page. This endpoint also validates the Loc parameter that is part of the reset password link sent to the user's email.
+#
+# tags:
+#   - forgot password
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.ResetPasswordLabel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: Loc
+#     type: string
+#     required: true
+#     description: Provided to the user as a part of the link sent to the user's email.
+###
+GET     /account-service/accounts/reset-password             @controllers.ResetPasswordController.resetPasswordPage(Loc: String)
+
+###
+# summary: Reset Password
+# description: Resets a user's password
+#
+# tags:
+#   - forgot password
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.ResetPasswordWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.ResetPasswordRequest'
+#   - name: Loc
+#     type: string
+#     required: true
+#     description: Provided to the user as a part of the link sent to the user's email.
+###
+POST    /account-service/accounts/reset-password              @controllers.ResetPasswordController.resetPasswordAction(Loc: String)
+
+#      ___                       ___           ___                                ___
+#     /  /\        ___          /  /\         /__/\                 ___          /__/\
+#    /  /:/_      /  /\        /  /:/_        \  \:\               /  /\         \  \:\
+#   /  /:/ /\    /  /:/       /  /:/ /\        \  \:\             /  /:/          \  \:\
+#  /  /:/ /::\  /__/::\      /  /:/_/::\   _____\__\:\           /__/::\      _____\__\:\
+# /__/:/ /:/\:\ \__\/\:\__  /__/:/__\/\:\ /__/::::::::\          \__\/\:\__  /__/::::::::\
+# \  \:\/:/~/:/    \  \:\/\ \  \:\ /~~/:/ \  \:\~~\~~\/             \  \:\/\ \  \:\~~\~~\/
+#  \  \::/ /:/      \__\::/  \  \:\  /:/   \  \:\  ~~~               \__\::/  \  \:\  ~~~
+#   \__\/ /:/       /__/:/    \  \:\/:/     \  \:\                   /__/:/    \  \:\
+#     /__/:/        \__\/      \  \::/       \  \:\                  \__\/      \  \:\
+#     \__\/                     \__\/         \__\/                              \__\/
+
+###
+# summary: Sign In Page
+# description: Retrieves labels, title for account sign in page
+#
+# tags:
+#   - sign in
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.SignInObject'
+###
+GET     /account-service/accounts/sign-in                   @controllers.SignInController.signInPage
+
+###
+# summary: Sign In
+# description: Sign into an account
+#
+# tags:
+#   - sign in
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.SignedInWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.ClientSignInRequest'
+###
+POST    /account-service/accounts/sign-in            @controllers.SignInController.signInAction
+
+###
+# summary: CSR Sign In Page
+# description: Retrieves labels, title for csr sign in page
+#
+# tags:
+#   - sign in
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.CsrUserSignInObject'
+###
+GET     /account-service/sign-in-csr               @controllers.SignInController.signInCsrPage
+
+###
+# summary: CSR Sign In
+# description: Sign into an account as a CSR agent
+#
+# tags:
+#   - sign in
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.SignedInWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.CSRSignInRequest'
+###
+POST    /account-service/sign-in-csr-action        @controllers.SignInController.signInCsrAction
+
+###
+# summary: Logout
+# description: Logout of a user's session by invalidating the user's JSESSIONID.
+#
+# tags:
+#   - sign in
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.SignOutWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: Cookie
+#     in: header
+#     type: string
+#     description: JSESSIONID cookies are invalidated if sent in header
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+###
+GET     /account-service/accounts/:account_id/sign-out             @controllers.SignInController.signOut(account_id: String)
+
+#       ___           ___           ___           ___           ___           ___
+#      /  /\         /  /\         /  /\         /  /\         /__/\         /__/\          ___
+#     /  /::\       /  /:/        /  /:/        /  /::\        \  \:\        \  \:\        /  /\
+#    /  /:/\:\     /  /:/        /  /:/        /  /:/\:\        \  \:\        \  \:\      /  /:/
+#   /  /:/~/::\   /  /:/  ___   /  /:/  ___   /  /:/  \:\   ___  \  \:\   _____\__\:\    /  /:/
+#  /__/:/ /:/\:\ /__/:/  /  /\ /__/:/  /  /\ /__/:/ \__\:\ /__/\  \__\:\ /__/::::::::\  /  /::\
+#  \  \:\/:/__\/ \  \:\ /  /:/ \  \:\ /  /:/ \  \:\ /  /:/ \  \:\ /  /:/ \  \:\~~\~~\/ /__/:/\:\
+#   \  \::/       \  \:\  /:/   \  \:\  /:/   \  \:\  /:/   \  \:\  /:/   \  \:\  ~~~  \__\/  \:\
+#    \  \:\        \  \:\/:/     \  \:\/:/     \  \:\/:/     \  \:\/:/     \  \:\           \  \:\
+#     \  \:\        \  \::/       \  \::/       \  \::/       \  \::/       \  \:\           \__\/
+#      \__\/         \__\/         \__\/         \__\/         \__\/         \__\/
+
+###
+# summary: Register Page
+# description: Retrieves data required to render registration page.
+#
+# tags:
+#   - account
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.RegisterWebsiteModel'
+###
+GET     /account-service/accounts                      @controllers.AccountsController.createAccountPage
+
+###
+# summary: Account
+# description: Retrieves basic account information.
+#
+# tags:
+#   - account
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.SignedInWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+###
+GET     /account-service/accounts/:account_id                       @controllers.AccountsController.getAccount(account_id: String)
+
+###
+# summary: Account
+# description: Retrieves basic account information.
+#
+# tags:
+#   - account
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.CreateAccountResponseWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.CreateAccountRequest'
+###
+POST    /account-service/accounts               @controllers.AccountsController.createAccount
+
+###
+# summary: Account Summary
+# description: Retrieves basic account information along with order history and rewards info.
+#
+# tags:
+#   - account
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.AccountSummaryResponseModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+GET     /account-service/accounts/:account_id/summary               @controllers.AccountsController.getAccountSummary(account_id: String)
+
+###
+# summary: Update Account
+# description: Update basic account information.
+#
+# tags:
+#   - account
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.UpdateProfileResponseWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.UpdateAccountRequest'
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+PUT    /account-service/accounts/:account_id        @controllers.AccountsController.updateAccount(account_id: String)
+
+#      ___           ___          _____          ___           ___           ___
+#     /  /\         /  /\        /  /::\        /  /\         /  /\         /  /\
+#    /  /::\       /  /::\      /  /:/\:\      /  /:/_       /  /::\       /  /:/_
+#   /  /:/\:\     /  /:/\:\    /  /:/  \:\    /  /:/ /\     /  /:/\:\     /  /:/ /\
+#  /  /:/  \:\   /  /:/~/:/   /__/:/ \__\:|  /  /:/ /:/_   /  /:/~/:/    /  /:/ /::\
+# /__/:/ \__\:\ /__/:/ /:/___ \  \:\ /  /:/ /__/:/ /:/ /\ /__/:/ /:/___ /__/:/ /:/\:\
+# \  \:\ /  /:/ \  \:\/:::::/  \  \:\  /:/  \  \:\/:/ /:/ \  \:\/:::::/ \  \:\/:/~/:/
+#  \  \:\  /:/   \  \::/~~~~    \  \:\/:/    \  \::/ /:/   \  \::/~~~~   \  \::/ /:/
+#   \  \:\/:/     \  \:\         \  \::/      \  \:\/:/     \  \:\        \__\/ /:/
+#    \  \::/       \  \:\         \__\/        \  \::/       \  \:\         /__/:/
+#     \__\/         \__\/                       \__\/         \__\/         \__\/
+
+###
+# summary: Order History
+# description: Retrieves a user's order history.
+#
+# tags:
+#   - orders
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.OrdersHistoryWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account_id
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+#   - name: page_num
+#     required: false
+#     type: string
+#     description: Which page of orders to return, 10 orders per page. If no value is given, default is first page.
+###
+GET     /account-service/accounts/:account_id/orders                               @controllers.OrderController.getOrderHistory(account_id: String, page_num: Int ?= 1)
+
+###
+# summary: Order Status
+# description: Retrieves a the order status for a particular order.
+#
+# tags:
+#   - orders
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.OrderDetailsWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.servicemodel.OrderRequest'
+#   - name: order_id
+#     type: string
+#     required: true
+#     description: order_id
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+GET    /account-service/orders/:order_id                                 @controllers.OrderController.getOrderDetails(order_id: String, billing_zip_code: String)
+
+###
+# summary: Cancel Order
+# description: Cancels an order.
+#
+# tags:
+#   - orders
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.Order'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.servicemodel.OrderRequest'
+#   - name: order_id
+#     type: string
+#     required: true
+#     description: order_id
+###
+PUT    /account-service/orders/:order_id                       @controllers.OrderController.cancelOrder(order_id: String)
+
+#      ___         ___                       ___           ___           ___                       ___
+#     /  /\       /  /\          ___        /__/\         /  /\         /__/\          ___        /  /\
+#    /  /::\     /  /::\        /__/|      |  |::\       /  /:/_        \  \:\        /  /\      /  /:/_
+#   /  /:/\:\   /  /:/\:\      |  |:|      |  |:|:\     /  /:/ /\        \  \:\      /  /:/     /  /:/ /\
+#  /  /:/~/:/  /  /:/~/::\     |  |:|    __|__|:|\:\   /  /:/ /:/_   _____\__\:\    /  /:/     /  /:/ /::\
+# /__/:/ /:/  /__/:/ /:/\:\  __|__|:|   /__/::::| \:\ /__/:/ /:/ /\ /__/::::::::\  /  /::\    /__/:/ /:/\:\
+# \  \:\/:/   \  \:\/:/__\/ /__/::::\   \  \:\~~\__\/ \  \:\/:/ /:/ \  \:\~~\~~\/ /__/:/\:\   \  \:\/:/~/:/
+#  \  \::/     \  \::/         ~\~~\:\   \  \:\        \  \::/ /:/   \  \:\  ~~~  \__\/  \:\   \  \::/ /:/
+#   \  \:\      \  \:\           \  \:\   \  \:\        \  \:\/:/     \  \:\           \  \:\   \__\/ /:/
+#    \  \:\      \  \:\           \__\/    \  \:\        \  \::/       \  \:\           \__\/     /__/:/
+#     \__\/       \__\/                     \__\/         \__\/         \__\/                     \__\/
+
+###
+# summary: Get Payment Methods
+# description: Retrieves all saved payment method for a user.
+#
+# tags:
+#   - payments
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.PaymentTabResponseWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+GET     /account-service/accounts/:account_id/payment-methods                                     @controllers.PaymentMethodController.getPaymentMethod(account_id: String)
+
+###
+# summary: Update Payment Method
+# description: Update a user's saved payment method.
+#
+# tags:
+#   - payments
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.PaymentTabPostResponseWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.UpdatePaymentMethodRequest'
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: payment_method_id
+#     type: string
+#     required: true
+#     description: Payment method id
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+PUT     /account-service/accounts/:account_id/payment-methods/$payment_method_id<[0-9]+>                                  @controllers.PaymentMethodController.updatePaymentMethod(account_id: String, payment_method_id: String)
+
+###
+# summary: Delete Payment Method
+# description: Delete a saved payment method for a user.
+#
+# tags:
+#   - payments
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.PaymentTabPostResponseWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: payment_method_id
+#     type: string
+#     required: true
+#     description: Payment method id
+###
+DELETE  /account-service/accounts/:account_id/payment-methods/$payment_method_id<[0-9]+>                  @controllers.PaymentMethodController.deletePaymentMethod(account_id: String, payment_method_id: String)
+
+###
+# summary: Create Payment Method
+# description: Save a payment method to a user's account.
+#
+# tags:
+#   - payments
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.PaymentTabPostResponseWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.UpdatePaymentMethodRequest'
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+POST    /account-service/accounts/:account_id/payment-methods                              @controllers.PaymentMethodController.createPaymentMethod(account_id: String)
+
+#      ___          _____         _____          ___           ___           ___           ___           ___           ___
+#     /  /\        /  /::\       /  /::\        /  /\         /  /\         /  /\         /  /\         /  /\         /  /\
+#    /  /::\      /  /:/\:\     /  /:/\:\      /  /::\       /  /:/_       /  /:/_       /  /:/_       /  /:/_       /  /:/_
+#   /  /:/\:\    /  /:/  \:\   /  /:/  \:\    /  /:/\:\     /  /:/ /\     /  /:/ /\     /  /:/ /\     /  /:/ /\     /  /:/ /\
+#  /  /:/~/::\  /__/:/ \__\:| /__/:/ \__\:|  /  /:/~/:/    /  /:/ /:/_   /  /:/ /::\   /  /:/ /::\   /  /:/ /:/_   /  /:/ /::\
+# /__/:/ /:/\:\ \  \:\ /  /:/ \  \:\ /  /:/ /__/:/ /:/___ /__/:/ /:/ /\ /__/:/ /:/\:\ /__/:/ /:/\:\ /__/:/ /:/ /\ /__/:/ /:/\:\
+# \  \:\/:/__\/  \  \:\  /:/   \  \:\  /:/  \  \:\/:::::/ \  \:\/:/ /:/ \  \:\/:/~/:/ \  \:\/:/~/:/ \  \:\/:/ /:/ \  \:\/:/~/:/
+#  \  \::/        \  \:\/:/     \  \:\/:/    \  \::/~~~~   \  \::/ /:/   \  \::/ /:/   \  \::/ /:/   \  \::/ /:/   \  \::/ /:/
+#   \  \:\         \  \::/       \  \::/      \  \:\        \  \:\/:/     \__\/ /:/     \__\/ /:/     \  \:\/:/     \__\/ /:/
+#    \  \:\         \__\/         \__\/        \  \:\        \  \::/        /__/:/        /__/:/       \  \::/        /__/:/
+#     \__\/                                     \__\/         \__\/         \__\/         \__\/         \__\/         \__\/
+
+###
+# summary: Get Addresses
+# description: Retrieves all saved addresses for a user. Must specify if retrieving shipping or billing addresses.
+#
+# tags:
+#   - addresses
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.AddressWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: address_type
+#     type: string
+#     required: true
+#     description: shipping or billing
+###
+GET /account-service/accounts/:account_id/addresses @controllers.AddressController.getAddresses(account_id: String, address_type: String)
+
+###
+# summary: Update Address
+# description: Update a saved address for a user. Must specify if updating a shipping or billing addresses. Returns all addresses.
+#
+# tags:
+#   - addresses
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.AddressesResponse'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.AddressRequest'
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: address_id
+#     type: string
+#     required: true
+#     description: Address id
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+PUT /account-service/accounts/:account_id/addresses/$address_id<[0-9]+> @controllers.AddressController.updateAddress(account_id: String, address_id: String)
+
+###
+# summary: Delete Address
+# description: Delete a saved address for a user. Must specify if deleting a shipping or billing addresses. Returns all remaining addresses.
+#
+# tags:
+#   - addresses
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.AddressesResponse'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: address_id
+#     type: string
+#     required: true
+#     description: Address id
+#   - name: address_type
+#     type: string
+#     required: true
+#     description: shipping or billing
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+DELETE /account-service/accounts/:account_id/addresses/$address_id<[0-9]+> @controllers.AddressController.deleteAddress(account_id: String, address_id: String, address_type: String)
+
+###
+# summary: Create Address
+# description: Create an address for a user. Returns all saved addresses.
+#
+# tags:
+#   - addresses
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.AddressesResponse'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.AddressRequest'
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+POST /account-service/accounts/:account_id/addresses @controllers.AddressController.createAddress(account_id: String)
+
+#      ___           ___                                               ___           ___           ___
+#     /  /\         /  /\          ___         ___       ___          /__/\         /  /\         /  /\
+#    /  /:/_       /  /:/_        /  /\       /  /\     /  /\         \  \:\       /  /:/_       /  /:/_
+#   /  /:/ /\     /  /:/ /\      /  /:/      /  /:/    /  /:/          \  \:\     /  /:/ /\     /  /:/ /\
+#  /  /:/ /::\   /  /:/ /:/_    /  /:/      /  /:/    /__/::\      _____\__\:\   /  /:/_/::\   /  /:/ /::\
+# /__/:/ /:/\:\ /__/:/ /:/ /\  /  /::\     /  /::\    \__\/\:\__  /__/::::::::\ /__/:/__\/\:\ /__/:/ /:/\:\
+# \  \:\/:/~/:/ \  \:\/:/ /:/ /__/:/\:\   /__/:/\:\      \  \:\/\ \  \:\~~\~~\/ \  \:\ /~~/:/ \  \:\/:/~/:/
+#  \  \::/ /:/   \  \::/ /:/  \__\/  \:\  \__\/  \:\      \__\::/  \  \:\  ~~~   \  \:\  /:/   \  \::/ /:/
+#   \__\/ /:/     \  \:\/:/        \  \:\      \  \:\     /__/:/    \  \:\        \  \:\/:/     \__\/ /:/
+#     /__/:/       \  \::/          \__\/       \__\/     \__\/      \  \:\        \  \::/        /__/:/
+#     \__\/         \__\/                                             \__\/         \__\/         \__\/
+
+###
+# summary: Get Account Settings
+# description: Retrieves account settings for a user. This includes email preferences and password settings and all the labels and messages needed for the settings page.
+#
+# tags:
+#   - settings
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.AccountSettingsResponseModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+GET     /account-service/accounts/:account_id/settings                   @controllers.AccountSettingsController.getAccountSettings(account_id: String)
+
+###
+# summary: Update Email Preferences
+# description: Update a user's email preferences. Request body should include a list of strings that represent the emails that the user wants to receive.
+#
+# tags:
+#   - settings
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.PreferencesResponseModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: body
+#     description: Valid options are off5th_opt_status, saks_opt_status, off5th_canada_opt_status, saks_canada_opt_status
+#     schema:
+#       $ref: '#/definitions/models.website.EmailPreferencesRequest'
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+PUT     /account-service/accounts/:account_id/settings/email-preferences      @controllers.AccountSettingsController.updateAccountSettings(account_id: String)
+
+###
+# summary: Change Password
+# description: Change a user's password.
+#
+# tags:
+#   - settings
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.SuccessResponse'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+#    401:
+#      description: bad credentials
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: body
+#     schema:
+#       $ref: '#/definitions/models.website.ChangePasswordRequest'
+#   - name: Cookie
+#     in: header
+#     required: true
+#     type: string
+#     description: UserName and JSESSIONID cookies are required
+###
+POST    /account-service/accounts/:account_id/settings/change-password     @controllers.AccountSettingsController.changePasswordAction(account_id: String)
+
+###
+# summary: Link Saks First Action
+# description: Links SaksFirst Account
+#
+# tags:
+#   - link saksfirst
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.website.RewardsWebsiteModel'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: body
+#     description: SaksFirst Program user information.
+#     schema:
+#       $ref: '#/definitions/models.website.LinkSaksFirstRequest'
+###
+POST    /account-service/accounts/:account_id/loyalty-program @controllers.RewardsController.linkSaksFirst(account_id: String)
+
+###
+# summary: Get Saks First Action
+# description: Get SaksFirst Summary
+#
+# tags:
+#   - get saksfirst summary
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.SaksFirstAccountSummary'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+###
+GET    /account-service/accounts/:account_id/loyalty-program      @controllers.RewardsController.getSaksFirstInfo(account_id: String)
+
+###
+# summary: Redeem Saks First Points
+# description: Redeem Saks First Points
+#
+# tags:
+#   - redeem saksfirst points for either a physical gift card or electronic gift card
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.SuccessResponse'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+#   - name: body
+#     description: Valid options are PHYSICAL_GIFT_CARD, ELECTRONIC_GIFT_CARD
+#     schema:
+#       $ref: '#/definitions/models.website.RedemptionRequest'
+###
+POST   /account-service/accounts/:account_id/loyalty-program/redeem   @controllers.RewardsController.redeem(account_id: String)
+
+
+###
+# summary: Get Saks First Summary Page Action
+# description: Get SaksFirst Summary Pagee
+#
+# tags:
+#   - get saksfirst summary page
+# responses:
+#    200:
+#      description: success
+#      schema:
+#        $ref: '#/definitions/models.servicemodel.SaksFirstSummaryPage'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+###
+GET    /account-service/accounts/:account_id/loyalty-program/summary  @controllers.RewardsController.getSaksFirstSummaryPage(account_id: String)
+
+
+###
+# summary: Send beauty box email for this user
+# Description: Send an email to this user's registered email address containing all the information they need to redeem their beauty boxes.
+#
+# tags:
+# - send beauty box email
+# responses:
+#    200:
+#        description: success
+#        $ref: '#/definitions/models.servicemodel.SuccessResponse'
+#    400:
+#      description: bad request
+#      schema:
+#        $ref: '#/definitions/models.ApiErrorModel'
+# parameters:
+#   - name: account_id
+#     type: string
+#     required: true
+#     description: account id
+###
+PUT   /account-service/accounts/:account_id/loyalty-program/beauty/email  @controllers.RewardsController.sendBeautyBoxEmail(account_id: String)

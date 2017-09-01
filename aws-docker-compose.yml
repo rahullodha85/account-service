@@ -1,0 +1,15 @@
+accountservice:
+  image: sd1pgo01lx.saksdirect.com/account-service:<version>
+  container_name: {{key "account_specific/docker-name"}}
+  restart: always
+  ports:
+    - "9805:9805"
+  environment:
+    - JAVA_OPTS={{key "account_specific/java-opts"}}
+    - CONSUL_HOST={{key "consul_host"}}
+    - ENV={{key "env"}}
+  log_driver: syslog
+  log_opt:
+    syslog-address: {{key "logstash/url"}}
+    tag: "{{key "banner"}}-{{key "env"}}-{{key "account_specific/docker-name"}}"
+  command: /opt/containerbuddy/containerbuddy -config file:///opt/containerbuddy/config.json /opt/account-service-0.1/bin/account-service -Dhttps.port=9805 -Dpidfile.path=/dev/null -Dconfig.file=/opt/account-service-0.1/conf/account-application.conf

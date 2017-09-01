@@ -1,0 +1,134 @@
+# account-service
+
+ AccountService is a Front End Service (API) that allows a client to directly interact with Account related core operations to create,
+ edit user’s account informations with Micro Services like UserAccountService, AddressService, PaymentMethodService, OrderService, etc.
+ which it is serviced by a front end Play Framework and a backend of BM service, website backend (can be MongoDB in future asap).
+
+
+## Prerequisites
+[Prerequisite Setup](https://github.com/saksdirect/HBCPlatformDocs/blob/master/gettingStarted/backendDevWorkstation/README.md#prerequisite-setup)  
+
+## Commands
+- To create a new box with containers running
+
+     ```
+      sbt build-zip
+
+      vagrant up
+      ```
+  - To run clean, test, and deploy your latest code
+
+     ```
+      sbt pre-commit
+      ```
+  - Sbt commands:
+     - build-zip: Compiles, tests, and publishes a zip file with the new code.
+     - pre-commit: Compiles, tests, zips code, and then refreshes docker container.
+     - sbt "run -DHBC_BANNER=s5a -DPRIVATE_IP=192.168.99.100 -Dhttp.port=9800 -Dhttps.port=9805" : Compiles and runs the
+     service locally for s5a
+
+## Routes
+
+[list all routes that this service supports]
+
+
+
+
+| Method | Route | Class | Description
+| ------ | ----- | ----- | -----------
+|GET|     /api-docs|                               no.samordnaopptak.apidoc.controllers.ApiDocController.get| Get Swagger Docs
+|GET|     /account-service|              controllers.Application.index|Index Page
+|PUT|     /account-service/logLevel/$level<code><(ALL&#124;TRACE&#124;DEBUG&#124;INFO&#124;WARN&#124;ERROR&#124;OFF)></code> | controllers.Application.changeLogLevel(level: String)|Change Log Level
+|GET|     /account-service/logLevel/$level<code><(ALL&#124;TRACE&#124;DEBUG&#124;INFO&#124;WARN&#124;ERROR&#124;OFF)></code>| controllers.Application.changeLogLevelGet(level: String)|Change Log Level (Convenient Method)
+|GET|     /account-service/admin/ping|                controllers.Admin.ping| Ping Service
+|GET|     /account-service/admin/jvmstats|            controllers.Admin.jvmstats| JVM Stats
+|GET|     /account-service/clear_toggles|             controllers.Application.clearToggles(name: Option[String] ?= None)| Clear the toggles cache
+|GET|     /account-service/toggles|                   controllers.Application.toggles(name: Option[String] ?= None)|
+|GET|     /account-service/sign-in|                   controllers.AccountController.signInPage| Metadata for Landing (Sign in) Page
+|POST|    /account-service/sign-in-action|            controllers.AccountController.signInAction| Login Action
+|GET|     /account-service/sign-in-csr|               controllers.AccountController.signInCsrPage| Metadata for Landing (Sign in CSR) Page
+|POST|    /account-service/sign-in-csr-action|        controllers.AccountController.signInCsrAction| CSR Login Action
+|GET|     /account-service/account|                       controllers.AccountController.getAccount| Get current User's Account
+|GET|     /account-service/account/summary|               controllers.AccountController.getAccountSummary| Get Current User's Account Summary
+|GET|     /account-service/register|                      controllers.AccountController.register| Metadata for Registeration Page
+|POST|    /account-service/register-action|               controllers.UserAccountController.createAccount| Create Account action
+|POST|    /account-service/account/profile-action|        controllers.UserAccountController.updateProfile| Updates current user's profile
+|GET|     /account-service/account/order-history|                               controllers.OrderController.getOrderHistory(page_num: Int ?= 1)| Deprecated: Get Current User's order History in pages of 10 orders
+|POST|    /account-service/order-status-action|                                 controllers.OrderController.getOrderDetails| Deprecated: Get a particular order details
+|POST|    /account-service/account/order/$order_num<[0-9]+>/cancel|             controllers.OrderController.cancelOrder(order_num: String)| Deprecated: Cancel the given order number
+|GET|     /account-service/account/:account_id/orders|                          controllers.OrderController.getOrderHistory(account_id: String, page_num: Int ?= 1)| Get Current User's order History in pages of 10 orders
+|GET|     /account-service/orders/:order_id|                                    controllers.OrderController.getOrderDetails(order_id: String, billing_zip_code: String)| Get a particular order details
+|PUT|     /account-service/account/orders/:order_id|                            controllers.OrderController.cancelOrder(order_id: String)| Cancel the given order number
+|GET|     /account-service/account/payment|                                     controllers.old.PaymentMethodController.getPaymentMethod| Deprecated: Get current user's payment methods
+|PUT|     /account-service/account/payment-action|                               controllers.old.PaymentMethodController.updatePaymentMethod| Deprecated: Update current user's payment method
+|DELETE|  /account-service/account/payment-action/$id<[0-9]+>|                  controllers.old.PaymentMethodController.deletePaymentMethod(id: String)|Deprecated: Delete current user's payment method
+|POST|    /account-service/account/payment-action|                              controllers.old.PaymentMethodController.createPaymentMethod|Deprecated: Create a  payment method for current user
+|GET|     /account-service/accounts/:account_id/payment-methods|                                     controllers.PaymentMethodController.getPaymentMethod(account_id: String)|  Get current user's payment methods
+|PUT|     /account-service/accounts/:account_id/payment-methods/$payment_method_id<[0-9]+>|                               controllers.PaymentMethodController.updatePaymentMethod(account_id: String, payment_method_id: String)|  Update current user's payment method
+|DELETE|  /account-service/accounts/:account_id/payment-methods/$payment_method_id<[0-9]+>|                  controllers.PaymentMethodController.deletePaymentMethod(account_id: String, payment_method_id: String)|  Delete current user's payment method
+|POST|    /account-service/accounts/:account_id/payment-methods|                              controllers.PaymentMethodController.createPaymentMethod(account_id: String)|Create a  payment method for current user
+|GET|     /account-service/accounts/:account_id/addresses|                                controllers.AddressController.getAddresses(account_id: String, address_type: String)|Get current user's address book
+|PUT|     /account-service/accounts/:account_id/addresses/$address_id<[0-9]+>|                         controllers.AddressController.updateAddress(account_id: String, address_id: String)|Update current user's address
+|DELETE|  /account-service/accounts/:account_id/addresses/$address_id<[0-9]+>|                         controllers.AddressController.deleteAddress(account_id: String, address_id: String, address_type: String)|Delete current user's address
+|POST|    /account-service/accounts/:account_id/addresses|                                     controllers.AddressController.createAddress(account_id: String)|Create a address for current user
+|GET|     /account-service/account/address-book|                                controllers.old.AddressController.getAddressBook(address_type: String)|Deprecated: Get current user's address book
+|PUT|     /account-service/account/address/$id<[0-9]+>|                         controllers.old.AddressController.updateAddress(id: String)|Deprecated: Update current user's address
+|DELETE|  /account-service/account/address/$id<[0-9]+>|                         controllers.old.AddressController.deleteAddress(id: String, address_type: String)|Deprecated: Delete current user's address
+|POST|    /account-service/account/address|                                     controllers.old.AddressController.createAddress|Deprecated: Create a address for current user
+|GET|     /account-service/account/settings|                                    controllers.AccountController.getAccountSettings|
+|PUT|     /account-service/account/settings/email-preferences|                  controllers.AccountController.updateAccountSettings|
+|POST|    /account-service/account/change-password-action|                      controllers.AccountController.changePasswordAction|
+|GET|     /account-service/forgot-password|                                     controllers.old.ResetPasswordController.forgotPasswordPage| Deprecated: Get Forgot password page
+|POST|    /account-service/forgot-password-action|                              controllers.old.ResetPasswordController.forgotPasswordAction| Deprecated: Forgot password action
+|GET|     /account-service/reset-password|                                      controllers.old.ResetPasswordController.resetPasswordPage(Loc: String)| Deprecated: Get Reset password page
+|POST|    /account-service/reset-password-action|                               controllers.old.ResetPasswordController.resetPasswordAction(Loc: String)| Deprecated: Reset password action
+|GET|     /account-service/accounts/forgot-password|                            controllers.ResetPasswordController.forgotPasswordPage| Get Forgot password page
+|POST|    /account-service/accounts/forgot-password|                            controllers.ResetPasswordController.forgotPasswordAction| Forgot password action
+|GET|     /account-service/accounts/reset-password|                             controllers.ResetPasswordController.resetPasswordPage(Loc: String)| Get Reset password page
+|POST|    /account-service/accounts/reset-password|                             controllers.ResetPasswordController.resetPasswordAction(Loc: String)| Reset password action
+|DELETE|  /account-service/clear-country-cache|                                 controllers.Application.clear|
+|GET|     /account-service/account/logout|                                      controllers.AccountController.logout|
+|POST|    /account-service/accounts/:account_id/saksfirst                       controllers.RewardsController.linkSaksFirst(account_id: String) |Create a saks first link
+|POST|    /account-service/link-saksfirst-action                                controllers.old.RewardsController.linkSaksFirst |Create a saks first link
+|GET|     /account-service/account/settings|                                    controllers.old.AccountController.getAccountSettings| 
+|GET|     /account-service/accounts/:account_id/settings|                       controllers.AccountSettingsController.getAccountSettings(account_id: String)| 
+|PUT|     /account-service/account/settings/email-preferences|                  controllers.old.AccountSettingsController.updateAccountSettings| 
+|PUT|     /account-service/accounts/:account_id/settings/email-preferences|     controllers.AccountSettingsController.updateAccountSettings(account_id: String)| 
+|POST|    /account-service/account/change-password-action|                      controllers.old.AccountSettingsController.changePasswordAction| 
+|POST|    /account-service/accounts/:account_id/change-password|                controllers.AccountSettingsController.changePasswordAction(account_id: String)|
+|GET|     /account-service/accounts/:account_id/settings                        controllers.AccountSettingsController.getAccountSettings(account_id: String)| 
+|PUT|     /account-service/accounts/:account_id/settings/email-preferences|     controllers.AccountSettingsController.updateAccountSettings(account_id: String)| 
+|POST|    /account-service/accounts/:account_id/settings/change-password|       controllers.AccountSettingsController.changePasswordAction(account_id: String)|
+
+## JSON Format in Payload:
+
+Please see [https://github.com/saksdirect/HBCServicesContract/wiki/Account-Service]
+
+# Architecture
+
+Accounts app is build as a single page app with two goals in mind:
+  - Build towards common platform (Banner agnostic)
+  - Decouple as much as possible from Blue Martini
+
+The app can work with the set of APIs we expose on top of Blue Martini and is not aware of Blue Martini at all. Any request that the app makes has a clear api.
+
+How it works –
+Browser loads the initial shell template and assets from AEM. Then the browser starts making api calls as the user takes any action on the app. The request flow is described in the diagram below:
+
+![Request Flow](https://github.com/saksdirect/account-service/blob/master/docs/Architecture.png)
+
+
+## Service Flow
+
+Account app is a combination of multiple microservices that are built on API gateway principle(see diagram below).
+Account Service acts as gateway(better known name - Front end service) to the other services and performs common operations:
+	- Authentication, validation, response composition
+
+Then at next level you have different microservices which does their job –  Broadly three types:
+  - Blue ones – Piggyback on external services and does jobs like massaging data according to our needs /cache their response and so forth.
+  - Yellow ones – are services to manage our core domain models(right now they talk to legacy website using a wrapper service) and have very less business logic , but they are they place where al the existing logic will go when we decide to move away from Blue martini
+  - Blue Martini Service – wrapper around the legacy websites. It does few things:
+    - Abstracts all the Blue Martini dependencies( like BM form , using the protocol which BM follows)
+    - Depending upon the originator talks to one of the two website(desktop/mobile).
+
+![Service Flow](https://github.com/saksdirect/account-service/blob/master/docs/service_overview.png)

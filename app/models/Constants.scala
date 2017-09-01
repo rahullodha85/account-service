@@ -1,0 +1,58 @@
+package models
+
+object Constants {
+
+  //request object
+  val NAME = "name"
+  val TITLE = "title"
+  val FIRST_NAME = "first_name"
+  val LAST_NAME = "last_name"
+  val EMAIL = "email"
+  val USER_ID = "user_id"
+  val ADDRESS_ID = "id"
+  val PAYMENT_ID = "id"
+  val IS_DEFAULT_ADDRESS = "is_default"
+  val IS_DEFAULT_PAYMENT = "is_default"
+  val PASSWORD = "password"
+  val CONFIRM_PASSWORD = "confirm_password"
+  val OLD_PASSWORD = "old_password"
+  val NEW_PASSWORD = "new_password"
+  val MIDDLE_NAME = "middle_name"
+  val PHONE_NAMBER = "phone_number"
+  val ZIP = "zip"
+  val PREFERENCES = "preferences"
+
+  val RECEIVE_EMAIL = "receive_email"
+  val SAKSFIRST_MEMBER = "saksfirst_member"
+  val SUBSCRIBED_DATE = "subscribed_date"
+  val SAKS_OPT_STATUS = "saks_opt_status"
+  val CANADIAN_CUSTOMER = "canadian_customer"
+  val CANADIAN_CUSTOMER_OPT_IN = "canadian_customer_opt_in"
+  val OFF5TH_CANADA_OPT_STATUS = "off5th_canada_opt_status"
+  val SAKS_CANADA_OPT_STATUS = "saks_canada_opt_status"
+  val OFF5TH_OPT_STATUS = "off5th_opt_status"
+  val IP_ADDRESS = "ip_address"
+  val PHONE = "phone"
+  val ADDRESS_TYPE = "address_type"
+  val ADDRESS1 = "address1"
+  val ADDRESS2 = "address2"
+  val COUNTRY = "country"
+  val STATE = "state"
+  val CITY = "city"
+  val COMPANY = "company"
+  val CANADA = "CA"
+  val US = "US"
+
+  val PAYMENT_BRAND = "brand"
+  val PAYMENT_NAME = "name"
+  val PAYMENT_NUMBER = "number"
+  val PAYMENT_MONTH = "month"
+  val PAYMENT_YEAR = "year"
+  val PAYMENT_SECURITY_CODE = "security_code"
+  val CREDIT_CARD_NUMBER = "saks_first_number"
+
+  val BILLING_ZIP_CODE = "billing_zip_code"
+  val ORDER_NUM = "order_num"
+  val OMS_RESERVATION_ID = "oms_reservation_id"
+  val SAKS_FIRST_REWARDS_THRESHOLD = 2500
+}
