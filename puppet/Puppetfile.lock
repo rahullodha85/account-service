@@ -1,0 +1,50 @@
+FORGE
+  remote: https://forgeapi.puppetlabs.com
+  specs:
+    puppetlabs-stdlib (4.7.0)
+    stahnma-epel (1.0.2)
+    stankevich-python (1.9.5)
+      puppetlabs-stdlib (< 6.0.0, >= 4.0.0)
+      stahnma-epel (< 2.0.0, >= 1.0.1)
+
+GIT
+  remote: git@github.com:saksdirect/hbcd-dockercompose.git
+  ref: master
+  sha: eabb4f4f86d0fe05294290397971c59cb560d39c
+  specs:
+    hbcd-dockercompose (0.1.0)
+      hbcd-pythonbase (>= 0)
+      puppetlabs-stdlib (>= 1.0.0)
+
+GIT
+  remote: git@github.com:saksdirect/hbcd-pythonbase.git
+  ref: master
+  sha: 9d08fb58cb2d0a1294c31dbe8f30c461cf2b9843
+  specs:
+    hbcd-pythonbase (0.1.0)
+      puppetlabs-stdlib (>= 1.0.0)
+      stahnma-epel (>= 0)
+      stankevich-python (>= 0)
+
+GIT
+  remote: git@github.com:saksdirect/hbcd-service-profile.git
+  ref: master
+  sha: bbc80caabe52be9eb9f4e9af2962f4b5bca454b8
+  specs:
+    hbcd-service-profile (0.1.0)
+      hbcd-dockercompose (>= 0)
+      hbcd-pythonbase (>= 0)
+      puppetlabs-stdlib (>= 1.0.0)
+
+GIT
+  remote: git@github.com:saksdirect/hbcd-servicehost-role.git
+  ref: master
+  sha: 8a6ac1b1ad366a2c27b99ced0d9e02a72336d4de
+  specs:
+    hbcd-servicehost-role (0.1.0)
+      hbcd-service-profile (>= 0)
+      puppetlabs-stdlib (>= 1.0.0)
+
+DEPENDENCIES
+  hbcd-servicehost-role (>= 0)
+

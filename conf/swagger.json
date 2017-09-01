@@ -1,0 +1,18 @@
+{
+  "swagger": "2.0",
+  "basePath": "/v1",
+  "info": {
+    "title": "account-service",
+    "description": "<strong>HBC Web Service:</strong>\n\nAll responses follow the following scheme:\n\n{ \"request\":{}, \"response\":{  \"results\":{}}, \"errors\":[]}",
+    "version": "0.1"
+  },
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ]
+}

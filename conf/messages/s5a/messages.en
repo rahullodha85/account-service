@@ -1,0 +1,120 @@
+customer_service_number=1.877.551.7257
+
+banner_name_canadian_customer=Saks Fifth Avenue (operated by Saks Incorporated)
+banner_canadian_name_canadian_customer=Saks Fifth Avenue Canada
+
+banner_name_canadian_customer_privacy_policy=Saks Fifth Avenue
+url_canadian_customer_privacy_policy=/include/aem/aem_static.jsp?page=policies
+email_canadian_customer_privacy_policy=service@saks.com
+website_canadian_customer_privacy_policy=www.saks.com
+
+
+terms_condition_url=/include/aem/aem_static.jsp?page=policies#terms
+
+beauty_terms_url=/include/aem/aem_static.jsp?page=beauty-terms
+
+contact_us_url=/include/aem/aem_static.jsp?page=contactus
+
+beauty_url=/beauty
+
+marketing_message_block=Saks Fifth Avenue Marketing, 225 Liberty Street, New York, NY 10281, 1-877-551-7257, <a href="/" target="_blank">www.saks.com</a>
+
+find_my_saksfirst_number_label=Where is my account number?
+
+latest_expected=Latest Expected
+ship_date=Ship Date
+pre_order_msg_suffix=Item may ship sooner than this date.
+pre_order_message=If you order this item now, you will not be charged until it ships to you. If you wish to change your order once it is placed, please refer to the instructions on your confirmation e-mail.
+
+
+points_available_label=Points Available
+tier_status_label=SaksFirst %tier_status% Member
+tier_status_header_label=SaksFirst %tier_status%
+banner_title_label=The Best Rewards in Fashion
+banner_link_label=join saksfirst
+
+get_gift_card_label=Get your %gift_card_amount% Gift Card
+current_point_balance_label=Current Point Balance
+points_to_next_reward_label=Points to Next Reward
+available_gift_card_label=Available Gift Card
+rewards_summary_label=Rewards Summary
+
+available_now=Available Now
+redeem_title=Redeem Your Points
+redeem_your_points=Redeem Your Points
+redeem=Redeem
+tier_member=%tier_status% Member
+member_status=Member Status
+credit_card_label=Please enter your SaksFirst Card Number
+receive_gift_card=How would you like to receive your SaksFirst Gift Card?
+your_points=Your Points
+back_to_your_points=Back To Your Points
+your_remaining_balances=Your Balances From
+next_reward=Earn %points_to_next_reward% more points to increase your redeemable Gift Card value to %next_gift_card_amount%
+points=points
+annual_spend=Annual Spend:
+redeem_your_gift_card=Redeem Your Gift Card
+redeem_for_gift_card=Redeem for Gift Card
+email_change=If you would like to change your email address, please call %phone%
+mail_change=If you would like to change your address, please call %phone%
+gift_card_balance=Gift Card Balances
+gift_card_history=View Your Gift Card Balances
+view=View
+no_gift_card_history=You have not redeemed any gift cards this year.
+equals_points=(equals %redeemable_points% pts)
+mailing_address=Mailing Address
+tier_info=Find out more about SaksFirst tiers and benefits. <a href="https://www.saksfifthavenue.com/SaksFirst">View Details</a>
+by_email=By Email
+by_mail=By Mail
+email=Email
+saks_first_gift_card=SaksFirst Gift Card
+success=Success! You have redeemed your
+success_email=Your Gift Card will be sent to the following email address:
+success_mail=Your Gift Card will be mailed for receipt within 15 business days to the following address:
+email_receipt=Your email receipt will be sent to:
+pay_your_bill=Pay Your Bill
+program_details=Program Details
+store_card=SaksFirst Store Card
+elite_mastercard=SaksFirst World Elite MasterCard
+rewards_url=/account/rewards
+need_help=Need Help?
+shop_now=Shop Now
+terms=Terms & Conditions
+saksfirst_terms=SaksFirst
+email_label=Email
+phone=1.877.551.7257
+gift_card=Gift Card
+balance=Balance
+total=Total
+apply_now=Apply Now
+not_saksfirst_user_title=The Best Rewards In Fashion
+not_saksfirst_user_body=Start earning points & more with our Exclusive Rewards Card.
+apply_now_url=https://saks.capitalonecards.com/#/apply
+store_card_url=https://www.hrsaccount.com/hrs/ecare?cmd_Redirect=Home&org=601&logoCode=000
+mastercard_url=https://www.partnercardservices.com/ecare/home_nli?&locale=en_US&brand=SA_601_000
+shop_beauty_url=/main/SectionPage.jsp?catId=2534374306418051&FOLDER%3C%3Efolder_id=2534374306418051
+saksfirst_terms_url=/SaksFirst/sf2017_terms_conditions.jsp
+mobile_saksfirst_terms_url=/saks-first.jsp?qsmvc=saks-first/terms-and-conditions/2017-tc
+
+beauty_join_message=Join our Beauty Rewards program by spending $250 in Beauty on your SaksFirst Credit Card.
+congratulations=Congratulations!
+beauty_rewards_available=You have Beauty Rewards available to redeem.
+earn_more_rewards=Earn More Rewards
+spend_more=Spend $250 to earn Beauty Rewards!
+earn_more_rewards_body=Keep shopping Beauty to earn your next reward!
+redeemed_all_rewards=You have redeemed all eligible Beauty Rewards for this year. Check back in January for new SaksFirst Beauty Rewards.
+shop_beauty=Shop Beauty
+beauty_learn_more=Learn More
+view_beauty_rewards=View Your Rewards
+beauty_terms=SaksFirst Beauty
+beauty_rewards_title=Your Beauty Rewards
+beauty_rewards_message=Below are the rewards* that are available for redemption. Present the redemption codes to your store associate to redeem.
+beauty_rewards_ps=*Rewards are redeemable in all Saks Fifth Avenue stores in the United States, no merchandise purchase is required at time of redemption. Rewards can be redeemed in Saks Fifth Avenue stores through 1/31/18. Any unredeemed rewards after 1/31/18 will be forfeited.
+beauty_available_rewards=Available Rewards
+beauty_redemption_code=Redemption Code
+beauty_pin_number=Pin Number
+beauty_email_details=Email Details
+beauty_email_confirmation=A list of your rewards will be sent to %email% shortly.
+
+migrating_saks_first=SaksFirst is currently undergoing maintenance. Please try again later.
+

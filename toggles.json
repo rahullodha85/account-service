@@ -1,0 +1,47 @@
+{
+  "item": {
+    "user": "account-service",
+    "toggles": [
+      {
+        "toggle_name": "ACCOUNT_WAIT_FOR_MORE_NUMBER",
+        "description": "",
+        "toggle_type": ""
+      },
+      {
+        "toggle_name": "IS_FAVORITE_ENABLED",
+        "description": "",
+        "toggle_type": "Permanent"
+      },
+      {
+        "toggle_name": "MIGRATING_SAKS_FIRST",
+        "description": "Disables linking saks first while migrating saks first accounts into user-account-service",
+        "toggle_type": "Temporary"
+      },
+      {
+        "toggle_name": "SAKS_FIRST_SUMMARY_ENABLED",
+        "description": "Enables the loyalty program endpoint that enables the saksfirst info to display in the new header",
+        "toggle_type": "Temporary"
+      },
+      {
+        "toggle_name": "GILT_EMAIL_SUBSCRIPTION",
+        "description": "Enables subscribing to gilt emails from off 5th",
+        "toggle_type": "Temporary"
+      },
+      {
+        "toggle_name": "SAKS_FIRST_PAGE",
+        "description": "Enables saksfirst tab in accounts",
+        "toggle_type": "Temporary"
+      },
+      {
+        "toggle_name": "DISABLE_SAKS_FIRST_REDEMPTION",
+        "description": "Disables saksfirst redemption",
+        "toggle_type": "Permanent"
+      },
+      {
+        "toggle_name": "BEAUTY_ENABLED",
+        "description": "Enables saksfirst beauty",
+        "toggle_type": "Temporary"
+      }
+    ]
+  }
+}

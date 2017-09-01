@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+forge "https://forgeapi.puppetlabs.com"
+
+mod 'hbcd-servicehost-role',
+  :git => "git@github.com:saksdirect/hbcd-servicehost-role.git"

@@ -1,0 +1,19 @@
+account:
+  image: sd1pgo01lx.saksdirect.com/account-service:<version>
+  container_name: account
+  hostname: <hostname>
+  restart: always
+  ports:
+    - "9800:9800"
+    - "9805:9805"
+  volumes:
+    - /saksservices/config:/opt/account-service-0.1/conf/custom
+    - /saksservices/applogs/aem/account:/opt/account-service-0.1/logs
+  labels:
+    io.rancher.container.network: 'true'
+  env_file:
+    - ./ms.env
+  log_driver: syslog
+  log_opt:
+    syslog-address: "udp://hd5ddkr30lx.digital.hbc.com:5514"
+    syslog-tag: "o5a-dev-account-service"
